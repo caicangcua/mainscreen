@@ -20,3 +20,7 @@ app.use(function(req, res) {
 app.listen(port)
 
 console.log('RESTful API server started on: ' + port)
+//https://viblo.asia/p/xay-dung-restful-api-don-gian-voi-nodejs-1Je5EdewlnL
+//https://stackoverflow.com/questions/56047981/node-js-heroku-deployment-on-mac-sh-1-nodemon-not-found-npm-err-nodemon
+//https://stackoverflow.com/questions/47706022/error-cannot-find-module-cors
+//debuger https://www.youtube.com/watch?v=Ypocng-cxVA

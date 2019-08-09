@@ -8,6 +8,7 @@ const util = require('util')
 
 module.exports = {
     get: (req, res) => {
+        var c = 0;
         res.json({ 'fuck': 'fucking' });
     },
     detail: (req, res) => {
