@@ -11,9 +11,10 @@ app.use(bodyParser.json())
 let routes = require('./api/routes') //importing route
 routes(app)
 
+var cors = require('cors');
+
+app.use(cors());
 app.use(function (req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.status(404).send({url: req.originalUrl + ' not found'})
 })
 
