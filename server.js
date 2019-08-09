@@ -11,9 +11,7 @@ app.use(bodyParser.json())
 let routes = require('./api/routes') //importing route
 routes(app)
 
-var cors = require('cors');
 
-app.use(cors());
 app.use(function (req, res) {
     res.status(404).send({url: req.originalUrl + ' not found'})
 })
