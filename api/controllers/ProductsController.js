@@ -9,6 +9,7 @@ const request = require('request');
 
 module.exports = {
     get: (req, res) => {
+<<<<<<< HEAD
         request({
             method: 'PUT',
             uri: "https://api.github.com/repos/caicangcua/pk8/contents/f1/f2/file.txt",
@@ -30,6 +31,10 @@ module.exports = {
         });
 
         res.json({ 'fuck': 'fucking' });
+=======
+        global.myNumber += 1;
+        res.json({ 'fuck': global.myNumber });
+>>>>>>> f140b5932b1f4f098dd877728b7da7580e68cdf8
     },
     detail: (req, res) => {
         let sql = 'SELECT * FROM products WHERE id = ?'
@@ -44,7 +49,7 @@ module.exports = {
         let sql = 'UPDATE products SET ? WHERE id = ?'
         db.query(sql, [data, productId], (err, response) => {
             if (err) throw err
-            res.json({message: 'Update success!'})
+            res.json({ message: 'Update success!'})
         })
     },
     store: (req, res) => {
@@ -52,14 +57,14 @@ module.exports = {
         let sql = 'INSERT INTO products SET ?'
         db.query(sql, [data], (err, response) => {
             if (err) throw err
-            res.json({message: 'Insert success!'})
+            res.json({ message: 'Insert success!'})
         })
     },
     delete: (req, res) => {
         let sql = 'DELETE FROM products WHERE id = ?'
         db.query(sql, [req.params.productId], (err, response) => {
             if (err) throw err
-            res.json({message: 'Delete success!'})
+            res.json({ message: 'Delete success!'})
         })
     }
 }
