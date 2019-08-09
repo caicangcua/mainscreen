@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const cors = require('cors')
 require('dotenv').load()
 const port = process.env.PORT || 3000
 
