@@ -8,6 +8,9 @@ const util = require('util')
 
 module.exports = {
     get: (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        next();
         res.json({ 'fuck': 'fucking' });
     },
     detail: (req, res) => {
