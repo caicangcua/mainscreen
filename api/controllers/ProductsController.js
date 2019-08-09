@@ -8,8 +8,8 @@ const util = require('util')
 
 module.exports = {
     get: (req, res) => {
-        var c = 0;
-        res.json({ 'fuck': 'fucking' });
+        global.myNumber += 1;
+        res.json({ 'fuck': global.myNumber });
     },
     detail: (req, res) => {
         let sql = 'SELECT * FROM products WHERE id = ?'
@@ -24,7 +24,7 @@ module.exports = {
         let sql = 'UPDATE products SET ? WHERE id = ?'
         db.query(sql, [data, productId], (err, response) => {
             if (err) throw err
-            res.json({message: 'Update success!'})
+            res.json({ message: 'Update success!' })
         })
     },
     store: (req, res) => {
@@ -32,14 +32,14 @@ module.exports = {
         let sql = 'INSERT INTO products SET ?'
         db.query(sql, [data], (err, response) => {
             if (err) throw err
-            res.json({message: 'Insert success!'})
+            res.json({ message: 'Insert success!' })
         })
     },
     delete: (req, res) => {
         let sql = 'DELETE FROM products WHERE id = ?'
         db.query(sql, [req.params.productId], (err, response) => {
             if (err) throw err
-            res.json({message: 'Delete success!'})
+            res.json({ message: 'Delete success!' })
         })
     }
 }

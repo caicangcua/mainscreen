@@ -17,6 +17,9 @@ app.use(function(req, res) {
     res.status(404).send({url: req.originalUrl + ' not found'})
 })
 
+global.myNumber; //Delclaration of the global variable - undefined
+global.myNumber = 5; //Global variable initialized to value 5. 
+
 app.listen(port)
 
 console.log('RESTful API server started on: ' + port)
