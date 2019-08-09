@@ -11,11 +11,11 @@ module.exports = {
     get: (req, res) => {
         request({
             method: 'PUT',
-            uri: "https://api.github.com/repos/caicangcua/pk8/contents/f1/f2/file.txt",
+            uri: "https://api.github.com/repos/caicangcua/pk8/contents/f1f2/file.txt",
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',
                 "Content-Type" : "application/vnd.github.v3+json",
-                "Authorization": "Token 39f250d422b1582fa2f9a6125f70a71226fa6377"
+                "Authorization": "Token 51a1dc08b9ce983caa4f1fb3777918095989d511"
             },
             body:JSON.stringify( {
                 "message": "my commit message",
