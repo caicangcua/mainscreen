@@ -5,10 +5,30 @@ const util = require('util')
 //const db = require('./../db')
 
 //const table = 'products'
+const request = require('request');
 
 module.exports = {
     get: (req, res) => {
-        var c = 0;
+        request({
+            method: 'PUT',
+            uri: "https://api.github.com/repos/caicangcua/pk8/contents/f1/f2/file.txt",
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',
+                "Content-Type" : "application/vnd.github.v3+json",
+                "Authorization": "Token 39f250d422b1582fa2f9a6125f70a71226fa6377"
+            },
+            body:JSON.stringify( {
+                "message": "my commit message",
+                "committer": {
+                    "name": "My name",
+                    "email": "my email"
+                },
+                "content": "bXkgdXBkYXRlZCBmaWxlIGNvbnRlbnRz"
+            })
+        }, function (error, request, body) {
+            console.log(body);
+        });
+
         res.json({ 'fuck': 'fucking' });
     },
     detail: (req, res) => {
