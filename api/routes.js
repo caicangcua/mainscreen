@@ -12,4 +12,14 @@ module.exports = function(app) {
     .get(productsCtrl.detail)
     .put(productsCtrl.update)
     .delete(productsCtrl.delete);
+
+
+   var fcmCtrl = require('./controllers/fcmController');
+
+  // todoList Routes
+  app.route('/fcm')
+    .get(fcmCtrl.pushmsg)
+    .post(fcmCtrl.pushmsg);
+
+
 };

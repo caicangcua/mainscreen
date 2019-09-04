@@ -28,7 +28,8 @@ module.exports = {
         //}, function (error, request, body) {
         //    console.log(body);
         //});
-
+        var d = new Date();
+        console.log("fucking: " + d.toLocaleString());
         res.json({ 'fuck': 'fucking' });
     },
     detail: (req, res) => {
@@ -49,11 +50,15 @@ module.exports = {
     },
     store: (req, res) => {
         let data = req.body;
-        let sql = 'INSERT INTO products SET ?'
-        db.query(sql, [data], (err, response) => {
-            if (err) throw err
-            res.json({ message: 'Insert success!'})
-        })
+        let sql = 'INSERT INTO products SET ?';
+        var d = new Date();
+        console.log(data.UUID + ": " + d.toLocaleString() + ' - lat: ' + data.lat + ' - lng: ' + data.lng + ' - statux: ' + data.statux);
+        res.json({ message: 'Insert success!' })
+
+        //db.query(sql, [data], (err, response) => {
+        //    if (err) throw err
+        //    res.json({ message: 'Insert success!'})
+        //})
     },
     delete: (req, res) => {
         let sql = 'DELETE FROM products WHERE id = ?'

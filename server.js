@@ -32,11 +32,12 @@ io.on('connection', (socket) => {
 
     console.log('user connected')
 
-    socket.on('join', function (userNickname) {
+    socket.on('join', function (args) {
 
-        console.log(userNickname + " : has joined the chat ");
+        console.log(args.id + " - Time: " + args.time + " - accuracy " + args.accuracy + " Lat:" + args.lat + " Lng:" + args.lng + " Speed:" + args.speed);
 
-        socket.broadcast.emit('userjoinedthechat', userNickname + " : has joined the chat ");
+        socket.broadcast.emit('userjoinedthechat', args.id + " : has joined the chat ");
+
     }).on("Client-sent-data", function (data) {
         //sau khi lắng nghe dữ liệu, server phát lại dữ liệu này đến các client khác
         socket.emit("Server-sent-data", data);
@@ -63,6 +64,12 @@ io.on('connection', (socket) => {
 
 
 });
+
+
+var fcm = require('fcm-notification');
+globalFCM = new fcm('brick-d29e0-firebase-adminsdk-sd2v2-528e31d459.json');
+
+
 
 
 
