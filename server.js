@@ -149,14 +149,10 @@ cl.on('error',
 
 
 
+ var https = require('https');
  function startKeepAlive() {
     setInterval(function() {
-        var options = {
-            host: 'https://jshared.herokuapp.com',
-            port: 80,
-            path: '/'
-        };
-        http.get(options, function(res) {
+        var req = https.get("https://jshared.herokuapp.com/products", function(res){
             res.on('data', function(chunk) {
                 try {
                     // optional logging... disable after it's working
@@ -168,7 +164,7 @@ cl.on('error',
         }).on('error', function(err) {
             console.log("Error: " + err.message);
         });
-    }, 20 * 60 * 1000); // load every 20 minutes
+    }, 5*60*1000); // load every 20 minutes
 }
 
 startKeepAlive();
