@@ -72,79 +72,105 @@ globalFCM = new fcm('brick-d29e0-firebase-adminsdk-sd2v2-528e31d459.json');
 
 
 
+function replyUPSTREAM(token) {
+    var message = {
+        token: token,
+        android: {
+            data: {    //This is only optional, you can send any data
+                score: '850',
+                time: '2:45'
+            },
+            priority: "high",
+            ttl: 0,
+        }
+    };
+    globalFCM.send(message, function (err, response) {
+        if (err) {
+            console.log('error found', err);
+        } else {
+            console.log('response here', response);
+        }
+    })
+}
 
 
 
 
+var xmpp = require('node-xmpp');
 
-//var xmpp = require('node-xmpp');
+//Set node-xmpp options.
+//Replace with your projectID in the jid and your API key in the password
+//The key settings for CCS are the last two to force SSL and Plain SASL auth.
+var options = {
+  type: 'client',
+  jid: '310577562177@fcm.googleapis.com',
+  password: 'AAAASE_dgkE:APA91bEkaAYfzNQ-YOsHEa9HgHfcNE03N4N_UOVDrfurAONv913EGsJEwsZ0I19BA91SoFFFL4hAlLfIVbdbynPR4YgCP7X9TD-_RAlF9Mj0LQp4Y1fJiV7GQpdwqubmlUCsvy02doI-',
+  port: 5235,
+  host:  "fcm-xmpp.googleapis.com",
+  legacySSL: true,
+  preferredSaslMechanism : 'PLAIN'
+};
 
-////Set node-xmpp options.
-////Replace with your projectID in the jid and your API key in the password
-////The key settings for CCS are the last two to force SSL and Plain SASL auth.
-//var options = {
-//  type: 'client',
-//  jid: '310577562177@fcm.googleapis.com',
-//  password: 'AAAASE_dgkE:APA91bEkaAYfzNQ-YOsHEa9HgHfcNE03N4N_UOVDrfurAONv913EGsJEwsZ0I19BA91SoFFFL4hAlLfIVbdbynPR4YgCP7X9TD-_RAlF9Mj0LQp4Y1fJiV7GQpdwqubmlUCsvy02doI-',
-//  port: 5235,
-//  host:  "fcm-xmpp.googleapis.com",
-//  legacySSL: true,
-//  preferredSaslMechanism : 'PLAIN'
-//};
+console.log('creating xmpp app');
 
-//console.log('creating xmpp app');
+var cl = new xmpp.Client(options);
+cl.on('online',
+  function() {
+    console.log("online");
+  });
 
-//var cl = new xmpp.Client(options);
-//cl.on('online',
-//  function() {
-//    console.log("online");
-//  });
+cl.on('stanza',
+  function(stanza) {
+    if (stanza.is('message') &&
+        // Best to ignore an error
+        stanza.attrs.type !== 'error') {
 
-//cl.on('stanza',
-//  function(stanza) {
-//    if (stanza.is('message') &&
-//        // Best to ignore an error
-//        stanza.attrs.type !== 'error') {
 
-//      console.log("Message received");
       
-//      //Message format as per here: https://developer.android.com/google/gcm/ccs.html#upstream
-//      var messageData = JSON.parse(stanza.getChildText("gcm"));
+      //Message format as per here: https://developer.android.com/google/gcm/ccs.html#upstream
+      var messageData = JSON.parse(stanza.getChildText("gcm"));
 
-//      if (messageData && messageData.message_type != "ack" && messageData.message_type != "nack") {
+      console.log("Message received from: " + messageData.from);
 
-//        var ackMsg = new xmpp.Element('message').c('gcm', { xmlns: 'google:mobile:data' }).t(JSON.stringify({
-//          "to":messageData.from,
-//          "message_id": messageData.message_id,
-//          "message_type":"ack"
-//        }));
-//        //send back the ack.
-//        cl.send(ackMsg);
-//        console.log("Sent ack");
+      if (messageData && messageData.message_type != "ack" && messageData.message_type != "nack") {
 
-//        //Now do something useful here with the message
-//        //e.g. awesomefunction(messageData);
-//        //but let's just log it.
-//        console.log(messageData);
+        var ackMsg = new xmpp.Element('message').c('gcm', { xmlns: 'google:mobile:data' }).t(JSON.stringify({
+            "to": messageData.from,
+            "message_id": messageData.message_id,
+            "message_type":"ack"
+          }));
+          //send back the ack.
+        cl.send(ackMsg);
+        console.log("Sent ack");
 
-//      } else {
-//        //Need to do something more here for a nack.
-//        console.log("message was an ack or nack...discarding");
-//      }
+        //setTimeout(function () {
+        //    replyUPSTREAM(messageData.from);
+        //    console.log("Sent replyMsg");
+        //});
 
-//    } else {
-//      console.log("error");
-//      console.log(stanza)
-//    }
+        //Now do something useful here with the message
+        //e.g. awesomefunction(messageData);
+        //but let's just log it.
+        console.log(messageData);
 
-//  });
+      } else {
+        //Need to do something more here for a nack.
+        console.log("message was an ack or nack...discarding");
+      }
 
-//cl.on('error',
-// function(e) {
-//   console.log("Error occured:");
-//   console.error(e);
-//   console.error(e.children);
-// });
+    } else {
+      console.log("error");
+      console.log(stanza)
+    }
+
+  });
+
+cl.on('error',
+ function(e) {
+   console.log("Error occured:");
+   console.error(e);
+   console.error(e.children);
+ });
 
 
 
